@@ -1,5 +1,5 @@
 <?php
-
+echo 'asd';
 header('Content-Type: text/html; charset=utf-8');
 
 $posts = unserialize(file_get_contents('posts.php'));
