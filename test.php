@@ -1,6 +1,5 @@
 <?php
 
-//test!
 header('Content-Type: text/html; charset=utf-8');
 
 $DB = new PDO("mysql:host=localhost;dbname=bd;charset=UTF8", 'root', '');
