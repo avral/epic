@@ -9,6 +9,7 @@ $post = $_POST['post'];
 
 $a = $DB->exec("INSERT INTO `bd`.`posts` (`id`, `title`, `post`) VALUES (NULL, '$title', '$post')");
 
+
 header('Location: http://localhost/blog');
 
 ?>
