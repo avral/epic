@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-header('Content-Type: text/html; charset=utf-8');
->>>>>>> b3e3563a73d014a778aefb0b2ab628d343171c77
 
 header('Content-Type: text/html; charset=utf-8');
 
