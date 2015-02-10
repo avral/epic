@@ -1,24 +1,13 @@
 <?php
-echo 'asd';
+
 header('Content-Type: text/html; charset=utf-8');
 
-$posts = unserialize(file_get_contents('posts.php'));
-
-if ($posts === false) {
-	$posts = [];
-}
+$DB = new PDO("mysql:host=localhost;dbname=bd;charset=UTF8", 'root', '');
 
 $title = $_POST['title'];
-$message = $_POST['message'];
+$post = $_POST['post'];
 
-$newPost = [
-	'title' => $title,
-	'message' => $message,
-];
-
-array_push($posts, $newPost);
-
-file_put_contents('posts.php', serialize($posts));
+$a = $DB->exec("INSERT INTO `bd`.`posts` (`id`, `title`, `post`) VALUES (NULL, '$title', '$post')");
 
 header('Location: http://localhost/blog');
 

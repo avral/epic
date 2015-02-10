@@ -1,15 +1,17 @@
 <?php header('Content-Type: text/html; charset=utf-8');
-$posts = unserialize(file_get_contents('posts.php'));
-$pageNum = $_GET['post'];
 session_start();
-$delete = $_GET['edit'];
+$pageNum = $_GET['post'];
 
-if ($_GET['edit'] == 'delete') {
-  unset($posts[$pageNum]);
-  file_put_contents('posts.php', serialize($posts));
-  echo '<h3>Пост удалён</h3>';
-  echo '<a class="btn btn-success pull-right" href="/blog/">На главную</a>';
-  exit();
+$DB = new PDO("mysql:host=localhost;dbname=bd;charset=UTF8", 'root', '');
+$a = $DB->query("SELECT * FROM `posts` WHERE `id` = '$pageNum'", PDO::FETCH_ASSOC);
+$posts = $a->fetchALL(PDO::FETCH_ASSOC);
+
+
+$edit = $_GET['edit'];
+
+if ($edit == 'delete' && $_SESSION['auth'] == 1) {
+  $a = $DB->query("DELETE FROM `bd`.`posts` WHERE `posts`.`id` = '$pageNum'");
+  header('Location: http://localhost/blog/');
 }
 
 ?>
@@ -57,13 +59,13 @@ if ($_GET['edit'] == 'delete') {
       <div class="post">
         <h1>
 
-        <?=$posts[$pageNum]['title']; ?>
+          <?=$posts[0]['title']; ?>
         
         </h1>
         <em><a href="#" target="_blank"></a></em>
           <p style="font-size: 1.2em;">
 
-            <?=$posts[$pageNum]['message']; ?>
+            <?=$posts[0]['post']; ?>
           
           </p>
       </div>
@@ -71,7 +73,7 @@ if ($_GET['edit'] == 'delete') {
       
         <?php if ($_SESSION['auth'] == 1){ ?>
 
-          <a href="?post=<?= $pageNum ?>&edit=delete" class="btn btn-danger pull-right"?>Удалить статью</a>
+          <a href="?post=<?=$pageNum ?>&edit=delete" class="btn btn-danger pull-right"?>Удалить статью</a>
 
         <?php } ?>
 
@@ -79,7 +81,7 @@ if ($_GET['edit'] == 'delete') {
     </div>
     <hr>
     <footer>
-
+        
     </footer>
   </body>
 </html>

@@ -1,6 +1,11 @@
 <?php header('Content-Type: text/html; charset=utf-8');
-$posts = unserialize(file_get_contents('posts.php'));
+//Сообщения базы
+$DB = new PDO("mysql:host=localhost;dbname=bd;charset=UTF8", 'root', '');
+$a = $DB->query("SELECT * FROM `posts`", PDO::FETCH_ASSOC);
+$posts = $a->fetchALL(PDO::FETCH_ASSOC);
+
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -29,7 +34,11 @@ session_start();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="http://localhost/blog/"><?php if ($_SESSION['auth'] == 1) { echo 'Админ'; } else { echo 'Гость'; }?></a>
+          <a class="brand" href="http://localhost/blog/">
+
+            <?php if ($_SESSION['auth'] == 1) { echo 'Админ'; } else { echo 'Гость'; }?>
+
+          </a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="http://localhost/blog/">Главная</a></li>
@@ -46,30 +55,33 @@ session_start();
       <div class="post">
         <h1>
 
-        <?=$posts[$key]['title']; ?>
+         <?=$value['title']; ?>
 
         </h1>                     
           <em><a href="#" target="_blank"></a></em>
           <p style="font-size: 1.2em;">
 
-            <?=$posts[$key]['message']; ?> 
+            <?=$value['post']; ?> 
 
-              <a class="btn btn-success pull-right" href="?post=<?=$key; ?>">Подробнее</a>
+              <a class="btn btn-success pull-right" href="?post=<?=$posts[$key]['id']; ?>">Подробнее</a>
           </p> 
       </div>  
 
   <?php } ?>
 
     <hr>
+
   <?php if ($_SESSION['auth'] == 1){ ?>
 
     <h4>Добавить новый пост</h4>
       <form action="add_post.php" method="POST">
         <input class="span8" placeholder="Заголовок" type="text" name="title"><br>
-        <textarea placeholder="Введите текст" name="message" rows="7" class="span12" ></textarea><br>
+        <textarea placeholder="Введите текст" name="post" rows="7" class="span12" ></textarea><br>
       <button type="submit" class="btn btn-success" style="margin-bottom: 10px;">Отправить</button>
       </form>
+
   <?php } ?>
+
     </div>
     <hr>
     <footer>
