@@ -20,7 +20,7 @@ session_start();
          background-color: #D3D3D3;
          border-radius: 10px;
          padding: 10px 10px;
-         margin-bottom: 10px;
+         margin-bottom: 10px; 
       }
     </style>
   </head>
@@ -32,7 +32,7 @@ session_start();
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>     
           </a>
           <a class="brand" href="http://localhost/blog/">
 
@@ -73,9 +73,11 @@ session_start();
 
   <?php if ($_SESSION['auth'] == 1){ ?>
 
-    <h4>Добавить новый пост</h4>
+    <h4>Добавить новый пост</h4> 
       <form action="add_post.php" method="POST">
-        <input class="span8" placeholder="Заголовок" type="text" name="title"><br>
+        <input class="span8" placeholder="Заголовок" type="text" name="title">
+        <input style="margin-left: 15px;" class="span4" type="text" placeholder="Ссылка на фоторгафию" name="img">
+        <br>
         <textarea placeholder="Введите текст" name="post" rows="7" class="span12" ></textarea><br>
       <button type="submit" class="btn btn-success" style="margin-bottom: 10px;">Отправить</button>
       </form>

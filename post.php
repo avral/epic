@@ -9,7 +9,7 @@ $posts = $a->fetchALL(PDO::FETCH_ASSOC);
 
 $edit = $_GET['edit'];
 
-if ($edit == 'delete' && $_SESSION['auth'] == 1) {
+if ($edit === 'delete' && $_SESSION['auth'] == 1) {
   $a = $DB->query("DELETE FROM `bd`.`posts` WHERE `posts`.`id` = '$pageNum'");
   header('Location: http://localhost/blog/');
 }
@@ -65,7 +65,7 @@ if ($edit == 'delete' && $_SESSION['auth'] == 1) {
         <em><a href="#" target="_blank"></a></em>
           <p style="font-size: 1.2em;">
 
-            <?=$posts[0]['post']; ?>
+            <?=$posts[0]['img'].'<br>'.$posts[0]['post'];   ?>
           
           </p>
       </div>
@@ -74,6 +74,21 @@ if ($edit == 'delete' && $_SESSION['auth'] == 1) {
         <?php if ($_SESSION['auth'] == 1){ ?>
 
           <a href="?post=<?=$pageNum ?>&edit=delete" class="btn btn-danger pull-right"?>Удалить статью</a>
+          <a href="?post=<?=$pageNum ?>&edit=edit" class="btn btn-primary pull-right" style="margin-right: 20px;"?>Редактировать</a>
+
+        <?php } ?>
+
+      </div>
+
+        <?php if ($edit === 'edit'){ ?>
+<br><hr>
+      <h4>Редактировать</h4>
+      <form action="add_post.php" method="POST">
+      <input type="hidden" name="postNum" value="<?=$pageNum ?>">
+        <input class="span8" type="text" name="title" value="<?=$posts[0]['title']; ?>"><br>
+        <textarea name="post" rows="7" class="span12" ><?=$posts[0]['post']; ?></textarea><br>
+      <button type="submit" class="btn btn-success" style="margin-bottom: 10px;">Отправить</button>
+      </form>
 
         <?php } ?>
 
