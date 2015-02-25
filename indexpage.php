@@ -74,7 +74,7 @@ session_start();
   <?php if ($_SESSION['auth'] == 1){ ?>
 
     <h4>Добавить новый пост</h4> 
-      <form action="add_post.php" method="POST">
+      <form action="add_post.php?edit=add" method="POST">
         <input class="span8" placeholder="Заголовок" type="text" name="title">
         <input style="margin-left: 15px;" class="span4" type="text" placeholder="Ссылка на фоторгафию" name="img">
         <br>

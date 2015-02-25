@@ -6,14 +6,6 @@ $DB = new PDO("mysql:host=localhost;dbname=bd;charset=UTF8", 'root', '');
 $a = $DB->query("SELECT * FROM `posts` WHERE `id` = '$pageNum'", PDO::FETCH_ASSOC);
 $posts = $a->fetchALL(PDO::FETCH_ASSOC);
 
-
-$edit = $_GET['edit'];
-
-if ($edit === 'delete' && $_SESSION['auth'] == 1) {
-  $a = $DB->query("DELETE FROM `bd`.`posts` WHERE `posts`.`id` = '$pageNum'");
-  header('Location: http://localhost/blog/');
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -83,7 +75,7 @@ if ($edit === 'delete' && $_SESSION['auth'] == 1) {
         <?php if ($edit === 'edit'){ ?>
 <br><hr>
       <h4>Редактировать</h4>
-      <form action="add_post.php" method="POST">
+      <form action="add_post.php?edit=edit" method="POST">
       <input type="hidden" name="postNum" value="<?=$pageNum ?>">
         <input class="span8" type="text" name="title" value="<?=$posts[0]['title']; ?>"><br>
         <textarea name="post" rows="7" class="span12" ><?=$posts[0]['post']; ?></textarea><br>
